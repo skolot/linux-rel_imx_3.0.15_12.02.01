@@ -1,0 +1,24 @@
+diff -Naur -x '*.o*' drivers/rtc.orig/rtc-mc34708.c drivers/rtc/rtc-mc34708.c
+--- a/drivers/rtc/rtc-mc34708.c	2012-05-08 11:36:32.000000000 +0300
++++ b/drivers/rtc/rtc-mc34708.c	2012-05-08 11:37:04.000000000 +0300
+@@ -306,12 +306,6 @@
+ }
+ 
+ static int
+-mc34708_rtc_update_irq_enable(struct device *dev, unsigned int enabled)
+-{
+-	return mc34708_rtc_irq_enable(dev, enabled, MC_PMIC_IRQ_1HZ);
+-}
+-
+-static int
+ mc34708_rtc_alarm_irq_enable(struct device *dev, unsigned int enabled)
+ {
+ 	return mc34708_rtc_irq_enable(dev, enabled, MC_PMIC_IRQ_TODA);
+@@ -323,7 +317,6 @@
+ 	.read_alarm = mc34708_rtc_read_alarm,
+ 	.set_alarm = mc34708_rtc_set_alarm,
+ 	.alarm_irq_enable = mc34708_rtc_alarm_irq_enable,
+-	.update_irq_enable = mc34708_rtc_update_irq_enable,
+ };
+ 
+ static irqreturn_t mc34708_rtc_reset_handler(int irq, void *dev)

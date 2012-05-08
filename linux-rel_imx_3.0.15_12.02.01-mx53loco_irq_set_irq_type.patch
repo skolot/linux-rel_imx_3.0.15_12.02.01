@@ -1,0 +1,72 @@
+diff -Naur -x '*.o' arch.orig/arm/mach-mx5/mx53_loco_pmic_da9053.c arch/arm/mach-mx5/mx53_loco_pmic_da9053.c
+--- a/arch/arm/mach-mx5/mx53_loco_pmic_da9053.c	2012-05-07 14:45:01.000000000 +0300
++++ b/arch/arm/mach-mx5/mx53_loco_pmic_da9053.c	2012-05-07 14:45:39.000000000 +0300
+@@ -266,7 +266,7 @@
+ 	/* s3c_gpio_setpull(DA9052_IRQ_PIN, S3C_GPIO_PULL_UP);*/
+ 
+ 	/* Set interrupt as LOW LEVEL interrupt source */
+-	set_irq_type(gpio_to_irq(MX53_LOCO_DA9052_IRQ), IRQF_TRIGGER_LOW);
++	irq_set_irq_type(gpio_to_irq(MX53_LOCO_DA9052_IRQ), IRQ_TYPE_LEVEL_LOW);
+ 
+ 	da9052_init_ssc_cache(da9052);
+ 
+diff -Naur -x '*.o' arch.orig/arm/mach-mx5/mx53_smd_pmic_da9053.c arch/arm/mach-mx5/mx53_smd_pmic_da9053.c
+--- a/arch/arm/mach-mx5/mx53_smd_pmic_da9053.c	2012-05-07 14:45:01.000000000 +0300
++++ b/arch/arm/mach-mx5/mx53_smd_pmic_da9053.c	2012-05-07 14:46:24.000000000 +0300
+@@ -280,7 +280,7 @@
+ 	/* s3c_gpio_setpull(DA9052_IRQ_PIN, S3C_GPIO_PULL_UP);*/
+ 	int ret;
+ 	/* Set interrupt as LOW LEVEL interrupt source */
+-	set_irq_type(gpio_to_irq(MX53_SMD_DA9052_IRQ), IRQF_TRIGGER_LOW);
++	irq_set_irq_type(gpio_to_irq(MX53_SMD_DA9052_IRQ), IRQ_TYPE_LEVEL_LOW);
+ 
+ 	da9052_init_ssc_cache(da9052);
+ #ifdef CONFIG_SND_SOC_SGTL5000
+diff -Naur -x '*.o*' drivers/input.orig/misc/isl29023.c drivers/input/misc/isl29023.c
+--- a/drivers/input/misc/isl29023.c	2012-05-07 15:42:54.000000000 +0300
++++ b/drivers/input/misc/isl29023.c	2012-02-22 08:51:19.000000000 +0200
+@@ -906,7 +906,7 @@
+ 		goto exit_free_input;
+ 
+ 	/* set irq type to edge falling */
+-	set_irq_type(client->irq, IRQF_TRIGGER_FALLING);
++	irq_set_irq_type(client->irq, IRQ_TYPE_EDGE_FALLING);
+ 	err = request_irq(client->irq, isl29023_irq_handler, 0,
+ 			  client->dev.driver->name, data);
+ 	if (err < 0) {
+diff -Naur -x '*.o*' drivers/input.orig/touchscreen/p1003_ts.c drivers/input/touchscreen/p1003_ts.c
+--- a/drivers/input/touchscreen/p1003_ts.c	2012-05-07 16:01:07.000000000 +0300
++++ b/drivers/input/touchscreen/p1003_ts.c	2012-05-07 16:02:04.000000000 +0300
+@@ -301,7 +301,7 @@
+ 		goto err_free_wq;
+ 
+ 	/* set irq type to edge falling */
+-	set_irq_type(p1003->irq, IRQF_TRIGGER_FALLING);
++	irq_set_irq_type(p1003->irq, IRQ_TYPE_EDGE_FALLING);
+ 	ret = request_irq(p1003->irq, p1003_irq, 0,
+ 			  client->dev.driver->name, p1003);
+ 	if (ret < 0) {
+diff -Naur -x '*.o*' drivers/mxc.orig/pmic/core/pmic_core_spi.c drivers/mxc/pmic/core/pmic_core_spi.c
+--- a/drivers/mxc/pmic/core/pmic_core_spi.c	2012-05-07 16:45:08.000000000 +0300
++++ b/drivers/mxc/pmic/core/pmic_core_spi.c	2012-05-07 16:46:05.000000000 +0300
+@@ -198,7 +198,7 @@
+ 	}
+ 
+ 	/* Set and install PMIC IRQ handler */
+-	set_irq_type(spi->irq, IRQF_TRIGGER_HIGH);
++	irq_set_irq_type(spi->irq, IRQ_TYPE_LEVEL_HIGH);
+ 	ret = request_irq(spi->irq, pmic_irq_handler, 0, "PMIC_IRQ", 0);
+ 	if (ret) {
+ 		kfree(spi_get_drvdata(spi));
+diff -Naur -x '*.o*' drivers/mxc.orig/pmic/core/pmic_core_i2c.c drivers/mxc/pmic/core/pmic_core_i2c.c
+--- a/drivers/mxc/pmic/core/pmic_core_i2c.c	2012-05-07 16:50:38.000000000 +0300
++++ b/drivers/mxc/pmic/core/pmic_core_i2c.c	2012-05-07 16:51:22.000000000 +0300
+@@ -256,7 +256,7 @@
+ 
+ 	/* Set and install PMIC IRQ handler */
+ 
+-	set_irq_type(pmic_irq, IRQF_TRIGGER_HIGH);
++	irq_set_irq_type(pmic_irq, IRQ_TYPE_LEVEL_HIGH);
+ 
+ 	ret =
+ 	    request_irq(pmic_irq, pmic_irq_handler, 0, "PMIC_IRQ",

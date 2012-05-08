@@ -1,0 +1,11 @@
+--- a/arch/arm/oprofile/common.c	2012-05-08 11:45:22.000000000 +0300
++++ b/arch/arm/oprofile/common.c	2012-05-08 11:45:30.000000000 +0300
+@@ -116,7 +116,7 @@
+ 	return oprofile_perf_init(ops);
+ }
+ 
+-void __exit oprofile_arch_exit(void)
++void oprofile_arch_exit(void)
+ {
+ 	oprofile_perf_exit();
+ }

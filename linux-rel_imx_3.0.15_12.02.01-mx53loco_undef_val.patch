@@ -1,0 +1,12 @@
+diff -Naur -x '*.o*' drivers/regulator.orig/mc13892-regulator.c drivers/regulator/mc13892-regulator.c
+--- a/drivers/regulator/mc13892-regulator.c	2012-05-08 11:05:28.000000000 +0300
++++ b/drivers/regulator/mc13892-regulator.c	2012-05-08 11:05:38.000000000 +0300
+@@ -452,7 +452,7 @@
+ 	if (ret)
+ 		goto err;
+ 
+-	hi  = val & MC13892_SWITCHERS0_SWxHI;
++	hi  = valread & MC13892_SWITCHERS0_SWxHI;
+ 	if (value > 1375000)
+ 		hi = 1;
+ 	if (value < 1100000)
